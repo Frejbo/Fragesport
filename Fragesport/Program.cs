@@ -37,6 +37,18 @@ void flyg() {
 
     Console.WriteLine("När planet lyfter så finns en point of no return, endast ytterst allvarliga fel kan förhindra detta då planet inte längre hinner stanna säkert på banan. Vid denna punkt ropar piloterna ut en term på 2 tecken. Vad är denna term?");
     if (request_answer("V1")) {score++;}
+
+    Console.WriteLine("Vad är den vanligaste typen av approaches för kommersiella flygplan?");
+    if (request_answer("ILS")) {score++;}
+
+    Console.WriteLine("Vad är Arlandas ICAO kod?");
+    if (request_answer("ESSA")) {score++;}
+
+    Console.WriteLine("Vad står 'CI' för?");
+    if (request_answer("Cost Index")) {score++;}
+
+    Console.WriteLine("Vad är standard QNH? Svara i HPA och endast siffror.");
+    if (request_answer("1013")) {score++;}
 }
 
 
