@@ -11,7 +11,9 @@ while (gameActive) {
     while (!quizzes.ContainsKey(currentTheme)) {
         Console.WriteLine("Vilket tema vill du ha på frågorna? Apple/Flyg");
         currentTheme = Console.ReadLine().ToLower();
+        Console.ForegroundColor = ConsoleColor.Yellow;
         if (!quizzes.ContainsKey(currentTheme)) {Console.WriteLine("Du måste skriva något av alternativen.");}
+        Console.ResetColor();
     }
 
     quizzes[currentTheme]();
@@ -67,33 +69,46 @@ bool request_answer(string answer, bool abc_question = false, bool require_corre
     answer = answer.ToLower();
     if (require_correct) { // används inte atm
         while (input != answer) {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
             input = Console.ReadLine().ToLower();
             if (input != answer) {Console.WriteLine("Fel, försök igen!");}
         }
-        Console.WriteLine("Rätt!");
-    }
+        Console.ForegroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("Rätt!");
+        Console.ResetColor();
+}
     else if (abc_question) {
         while (input.Length != 1) {
             input = Console.ReadLine().ToLower();
             if (input == answer.ToLower()) {
+                Console.ForegroundColor = ConsoleColor.Green;
                 System.Console.WriteLine("Rätt!");
+                Console.ResetColor();
             }
             else if (input.Length != 1) {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 System.Console.WriteLine("Svara med 1 bokstav. Försök igen.");
+                Console.ResetColor();
             }
             else {
+                Console.ForegroundColor = ConsoleColor.Red;
                 System.Console.WriteLine($"Fel! Rätt svar var {answer}.");
+                Console.ResetColor();
             }
         }
     }
     else {
         input = Console.ReadLine().ToLower();
         if (input == answer) {
-            Console.WriteLine("Rätt!");
-            score++;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Rätt!", Console.ForegroundColor);
+            Console.ResetColor();
         }
         else {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Fel! Rätt svar var {answer}.");
+            Console.ResetColor();
         }
     }
     return ((input == answer.ToLower()));
