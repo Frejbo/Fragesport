@@ -2,35 +2,44 @@
 
 Dictionary<string, Action> quizzes = new();
 
-quizzes.Add("geografi", geografi);
+quizzes.Add("apple", apple);
 quizzes.Add("flyg", flyg);
 
 bool gameActive = true;
 while (gameActive) {
     string currentTheme = "";
     while (!quizzes.ContainsKey(currentTheme)) {
-        Console.WriteLine("Vilket tema vill du ha på frågorna? Geografi/Flyg");
+        Console.WriteLine("Vilket tema vill du ha på frågorna? Apple/Flyg");
         currentTheme = Console.ReadLine().ToLower();
         if (!quizzes.ContainsKey(currentTheme)) {Console.WriteLine("Du måste skriva något av alternativen.");}
     }
 
     quizzes[currentTheme]();
-    Console.WriteLine($"Du fick {score} poäng på {currentTheme}! Vill du köra igen?");
+    Console.WriteLine($"Du fick {score} poäng på {currentTheme}! Vill du köra ett annat quiz?");
     if (Console.ReadLine().ToLower() != "ja") {
         gameActive = false;
+        System.Console.WriteLine("Hejdå tråkmåns :(");
+        Console.ReadLine();
     }
 }
 
-void geografi() {
-    Console.WriteLine("-- Geografi Frågesport --");
-    Console.WriteLine("Vad heter världens högsta torn?");
+void apple() {
+    Console.WriteLine("-- Apple Frågesport --");
+    System.Console.WriteLine("Vilken var den första iPhonen med MagSafe?\nA) iPhone 7\nB) iPhone X\nC) iPhone 11 Pro\nD) iPhone 12\nE) iPhone 13");
+    if (request_answer("D", true)) {score++;}
+    
+    System.Console.WriteLine("Vad hette den första telefonen?\nA) iPhone 1G\nB) iPhone 2G\nC) iPhone 3G\nD) iPhone 3GS");
+    if (request_answer("B", true)) {score++;}
+
+    System.Console.WriteLine("Vilket chip använder iPhone 14 Pro? Svara 3 tecken.");
+    if (request_answer("A16")) {score++;}
+
+    System.Console.WriteLine("Vilket år släpptes iPhone X?");
+    if (request_answer("2017")) {score++;}
 }
 
 void flyg() {
     Console.WriteLine("-- Flyg Frågesport --");
-
-    // (string text, bool correct) result = request_answer("APU");
-    // Console.WriteLine(result.text);
     
     Console.WriteLine("Vad står APU för?");
     if (request_answer("Auxiliary Power Unit")) {score++;}
@@ -38,8 +47,8 @@ void flyg() {
     Console.WriteLine("När planet lyfter så finns en point of no return, endast ytterst allvarliga fel kan förhindra detta då planet inte längre hinner stanna säkert på banan. Vid denna punkt ropar piloterna ut en term på 2 tecken. Vad är denna term?");
     if (request_answer("V1")) {score++;}
 
-    Console.WriteLine("Vad är den vanligaste typen av approaches för kommersiella flygplan?");
-    if (request_answer("ILS")) {score++;}
+    Console.WriteLine("Vad är den vanligaste typen av approaches för kommersiella flygplan?\nA) RNAV\nB) VOR\nC) ILS\nD) VFR");
+    if (request_answer("C", true)) {score++;}
 
     Console.WriteLine("Vad är Arlandas ICAO kod?");
     if (request_answer("ESSA")) {score++;}
@@ -50,17 +59,32 @@ void flyg() {
     Console.WriteLine("Vad är standard QNH? Svara i HPA och endast siffror.");
     if (request_answer("1013")) {score++;}
 }
+// orkar inte komma på fler quizz :P
 
 
-bool request_answer(string answer, bool require_correct = false) {
+bool request_answer(string answer, bool abc_question = false, bool require_correct = false) {
     string input = "";
     answer = answer.ToLower();
-    if (require_correct) {
+    if (require_correct) { // används inte atm
         while (input != answer) {
             input = Console.ReadLine().ToLower();
             if (input != answer) {Console.WriteLine("Fel, försök igen!");}
         }
         Console.WriteLine("Rätt!");
+    }
+    else if (abc_question) {
+        while (input.Length != 1) {
+            input = Console.ReadLine().ToLower();
+            if (input == answer.ToLower()) {
+                System.Console.WriteLine("Rätt!");
+            }
+            else if (input.Length != 1) {
+                System.Console.WriteLine("Svara med 1 bokstav. Försök igen.");
+            }
+            else {
+                System.Console.WriteLine($"Fel! Rätt svar var {answer}.");
+            }
+        }
     }
     else {
         input = Console.ReadLine().ToLower();
@@ -74,7 +98,3 @@ bool request_answer(string answer, bool require_correct = false) {
     }
     return ((input == answer.ToLower()));
 }
-
-
-Console.WriteLine("PROGRAMMET SLUT");
-Console.ReadLine();
